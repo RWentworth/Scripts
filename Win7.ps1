@@ -40,10 +40,10 @@ Write-Output "#11 The workstation shall have a regional language set to U.S: $cm
 Write-Output `n | Out-File -Append "$file"
 
 Write-Output "#12 All Windows 7 workstations shall follow the approved standard naming convention: $name" |  Out-File -Append "$file"
-$cmd1 = (gp 'HKLM:\SOFTWARE\Symantec\Symantec Endpoint Protection\CurrentVersion').'ProductName'
-$cmd2 = (gp 'HKLM:\SOFTWARE\Symantec\Symantec Endpoint Protection\SMC').'ProductVersion'
 Write-Output `n | Out-File -Append "$file"
 
+$cmd1 = (gp 'HKLM:\SOFTWARE\Symantec\Symantec Endpoint Protection\CurrentVersion').'ProductName'
+$cmd2 = (gp 'HKLM:\SOFTWARE\Symantec\Symantec Endpoint Protection\SMC').'ProductVersion'
 Write-Output "#14 Virus-scanning software with the latest virus definitions shall be installed: $cmd1 $cmd2" | Out-File -Append "$file"
 Write-Output `n | Out-File -Append "$file"
 
@@ -406,6 +406,7 @@ elseif ($cmd -eq 0)
 Write-Output `n | Out-File -Append "$file"
 
 $cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").NullSessionPipes
+
 Write-Output "#133 Network access: Named Pipes that can be accessed anonymously: $cmd"  |  Out-File -Append "$file"
 Write-Output `n | Out-File -Append "$file"
 

@@ -1,0 +1,298 @@
+Write-Output `n "7) 0 = Disabled, 1 = Enabled, 2/3/4 require research. Mostly configured by OU" | Out-File -Append "$file"
+$cmd = cat $sec | Select-String -Pattern 'EnableAdminAccount ='
+Write-Output "Accounts: Administrator Account Status: $cmd" | Out-File -Append "$file"
+$cmd = cat $sec | Select-String -Pattern 'EnableGuestAccount ='
+Write-Output "Accounts: Guest Account Status: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").LimitBlankPasswordUs
+Write-Output "Accounts: Limit local account use of blank passwords to console logon only: $cmd"  | Out-File -Append "$file"
+$cmd = cat $sec | Select-String -Pattern 'NewAdministratorName ='
+Write-Output "Accounts: Rename Administrator Account: $cmd" | Out-File -Append "$file"
+$cmd = cat $sec | Select-String -Pattern 'NewGuestName ='
+Write-Output "Account: Rename Guest Account: $cmd" | Out-File -Append "$file"
+$cmd = cat $sec | Select-String -Pattern 'AuditObjectAccess ='
+Write-Output "Audit: Audit the access of global system objects: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").FullPrivilegeAuditing
+Write-Output "Audit: Audit the use of Backup and Restore privilege: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").SCENoApplyLegacyAuditPolicy
+Write-Output "Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").CrashOnAuditFail
+Write-Output "Audit: Shutdown the system immediately if unable to log security audits: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SeCEdit\Reg Values\MACHINE/Software/Policies/Microsoft/Windows NT/DCOM/MachineAccessRestriction").ValueType
+Write-Output "DCOM: Machine Access Restrictions in Security Descriptor Definition Language (SDDL) syntax: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SeCEdit\Reg Values\MACHINE/Software/Policies/Microsoft/Windows NT/DCOM/MachineLaunchRestriction").ValueType
+Write-Output "DCOM: Machine Launch Restrictions in Security Descriptor Definition Language (SDDL) syntax: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").UndockWithoutLogon
+Write-Output "Devices: Allow undock without having to log on: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon").AllocateDASD
+Write-Output "Devices: Allowed to format and eject removable media: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers").AddPrinterDrivers
+Write-Output "Devices: Prevent users from installing printer drivers: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon").AllocateCDRoms
+Write-Output "Devices: Restrict CD-ROM access to locally logged-on user only: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon").AllocateFloppies
+Write-Output "Devices: Restrict floppy access to locally logged-on user only: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").SubmitControl
+Write-Output "Domain controller: Allow server operators to schedule tasks: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LDAP").LDAPClientIntegrity
+Write-Output "Domain controller: LDAP server signing requirements: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").RefusePWChange
+Write-Output "Domain controller: Refuse machine account password changes: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").RequireSignOrSeal
+Write-Output "Digitally encrypt or sign secure channel data (always): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").SealSecureChannel
+Write-Output "Domain member: Digitally encrypt secure channel data (when possible): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").SignSecureChannel
+Write-Output "Domain member: Digitally sign secure channel data (when possible): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").DisablePasswordChange
+Write-Output "Domain member: Disable machine account password changes: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").DisablePasswordChange
+Write-Output "Domain member: Disable machine account password changes: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").MaximumPasswordAge
+Write-Output "Domain member: Maximum machine account password age: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").RequireStrongKey
+Write-Output "Domain member: Require strong (Windows 2000 or later) session key: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").DontDisplayLockedUserId
+Write-Output "Interactive logon: Display user information when session is locked: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").DontDisplayLastUserName
+Write-Output "Interactive logon: Do not display last user name: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").DisableCAD
+Write-Output "Interactive logon: Do not require CTRL+ALT+DEL: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").LegalNoticeText
+Write-Output "Interactive logon: Message text for users attempting to log on: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").LegalNoticeCaption
+Write-Output "Interactive logon: Message title for users attempting to log on: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon").CachedLogonsCount
+Write-Output "Interactive logon: Number of previous logons to cache (in case domain controller is not available): $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon").PasswordExpiryWarning
+Write-Output "Interactive logon: Prompt user to change password before expiration: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon").ForceUnlockLogon
+Write-Output "Interactive logon: Require Domain Controller authentication to unlock workstation: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").ScForceOption
+Write-Output "Interactive logon: Require smart card: $cmd" | Out-File -Append "$file" 
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon").ScRemoveOption
+Write-Output "Interactive logon: Smart card removal behavior: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").RequireSecuritySignature
+Write-Output "Microsoft network client: Digitally sign communications (always): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").EnableSecuritySignature
+Write-Output "Microsoft network client: Digitally sign communications (if server agrees): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanmanWorkstation\Parameters").EnablePlainTextPassword
+Write-Output "Microsoft network client: Send unencrypted password to third-party SMB servers: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").AutoDisconnect
+Write-Output "Microsoft network server: Amount of idle time required before suspending session: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").RequireSecuritySignature
+Write-Output "Microsoft network server: Digitally sign communications (always): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").EnableSecuritySignature
+Write-Output "Microsoft network server: Digitally sign communications (if client agrees): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").EnableForcedLogOff
+Write-Output "Microsoft network server: Disconnect clients when logon hours expire: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").SmbServerNameHardeningLevel
+Write-Output "Microsoft network server: Server SPN target name validation level: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon").AutoAdminLogon
+Write-Output "MSS: (AutoAdminLogon) Enable Automatic Logon (not recommended): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\SYSTEM\CurrentControlSet\Control\CrashControl").AutoReboot
+Write-Output "MSS: (AutoReboot) Allow Windows to automatically restart after a system crash (recommended except for highly secure environments): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon").AutoAdminLogon
+Write-Output "MSS: (DisableSavePassword) Prevent the dial-up password from being saved (recommended): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters").DisableIPSourceRouting
+Write-Output "MSS: (DisableIPSourceRouting) IP source routing protection level (protects against packet spoofing): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters").EnableDeadGWDetect
+Write-Output "MSS: (EnableDeadGWDetect) Allow automatic detection of dead network gateways (could lead to DoS): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters").EnableICMPRedirect
+Write-Output "MSS: (EnableICMPRedirect) Allow ICMP redirects to override OSPF generated routes: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").Hidden
+Write-Output "MSS: (Hidden) Hide Computer From the Browse List (not recommended except for highly secure environments): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters").KeepAliveTime
+Write-Output "MSS: (KeepAliveTime) How often keep-alive packets are sent in milliseconds: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\IPSEC").NoDefaultExempt
+Write-Output "MSS: (NoDefaultExempt) Configure IPSec exemptions for various types of network traffic.: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer").NoDriveTypeAutoRun
+Write-Output "MSS: (NoDriveTypeAutoRun) Disable Autorun for all drives (recommended): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netbt\Parameters").NoNameReleaseOnDemand
+Write-Output "MSS: (NoNameReleaseOnDemand) Allow the computer to ignore NetBIOS name release requests except from WINS servers: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\FileSystem").NtfsDisable8dot3NameCreation
+Write-Output "MSS: (NtfsDisable8dot3NameCreation) Enable the computer to stop generating 8.3 style filenames (recommended): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters").PerformRouterDiscovery
+Write-Output "MSS: (PerformRouterDiscovery) Allow IRDP to detect and configure Default Gateway addresses (could lead to DoS): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Session Manager").SafeDllSearchMode
+Write-Output "MSS: (SafeDllSearchMode) Enable Safe DLL search mode (recommended): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon").ScreenSaverGracePeriod
+Write-Output "MSS: (ScreenSaverGracePeriod) The time in seconds before the screen saver grace period expires (0 recommended): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters").SynAttackProtect
+Write-Output "MSS: (SynAttackProtect) Syn attack protection level (protects against DoS): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters").TCPMaxConnectResponseRetransmissions
+Write-Output "MSS: (TCPMaxConnectResponseRetransmissions) SYN-ACK retransmissions when a connection request is not acknowledged: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Tcpip\Parameters").TCPMaxDataRetransmissions
+Write-Output "MSS: (TCPMaxDataRetransmissions) How many times unacknowledged data is retransmitted (3 recommended, 5 is default): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Eventlog\Security").WarningLevel
+Write-Output "MSS: (WarningLevel) Percentage threshold for the security event log at which the system will generate a warning: $cmd" | Out-File -Append "$file"
+$cmd = cat $sec | Select-String -Pattern 'LSAAnonymousNameLookup ='
+Write-Output "Account: Rename Guest Account: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").RestrictAnonymousSAM
+Write-Output "Network access: Do not allow anonymous enumeration of SAM accounts: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").RestrictAnonymous
+Write-Output "Network access: Do not allow anonymous enumeration of SAM accounts and shares: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").DisableDomainCreds
+Write-Output "Network access: Do not allow storage of passwords and credentials for network authentication: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").EveryoneIncludesAnonymous
+Write-Output "Network access: Let Everyone permissions apply to anonymous users: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").NullSessionPipes
+Write-Output "Network access: Named Pipes that can be accessed anonymously: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedPaths").Machine
+Write-Output "Network access: Remotely accessible registry paths: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedPaths").Machine
+Write-Output "Network access: Remotely accessible registry paths and sub-paths: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").NullSessionShares
+Write-Output "Network access: Restrict anonymous access to Named Pipes and Shares: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").ForceGuest
+Write-Output "Network access: Sharing and security model for local accounts: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").UseMachineId
+Write-Output "Network security: Allow Local System to user computer identity for NTLM: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0").allownullsessionfallback
+Write-Output "Network security: Allow LocalSytem NULL session fallback: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa\pku2u").AllowOnlineID
+Write-Output "Network security: Allow PKU2U authentication requests to this computer to use online identities: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters").SupportedEncryptionTypes
+Write-Output "Network security: Configure encryption types allowed to Kerberos: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").NoLMHash
+Write-Output "Network security: Do not store LAN Manager hash value on next password change: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters").EnableForcedLogOff
+Write-Output "Network security: Force logoff when logon hours expire: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").LmCompatibilityLevel
+Write-Output "Network security: LAN Manager authentication level: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\LDAP").LDAPClientIntegrity
+Write-Output "Network security: LDAP client signing requirements: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0").NTLMMinClientSec
+Write-Output "Network security: Minimum session security for NTLM SSP based (including secure RPC) clients: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0").NTLMMinServerSec
+Write-Output "Network security: Minimum session security for NTLM SSP based (including secure RPC) servers Special Note: The NTLMv2 session security and 128 bit encryption must exist if the LAN Manager Authentication Level is Send NTLMv2 Response Only\Refuse LM & NTLM.: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0").NTLMMinClientSec
+Write-Output "Network security: Restrict NTLM: Add remote server exception for NTLM authentication: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").DCAllowedNTLMServers
+Write-Output "Network security: Restrict NTLM: Add server exceptions in this domain: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0").AuditReceivingNTLMTraffic
+Write-Output "Network security: Restrict NTLM: Audit Incoming NTLM Traffic: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").AuditNTLMInDomain
+Write-Output "Network security: Restrict NTLM: Audit NTLM authentication in this domain: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0").RestrictReceivingNTLMTraffic
+Write-Output "Network security: Restrict NTLM: Restrict NTLM: Incoming NTLM traffic: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\Netlogon\Parameters").RestrictNTLMInDomain
+Write-Output "Network security: Restrict NTLM: NTLM authentication in this domain: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa\MSV1_0").RestrictSendingNTLMTraffic
+Write-Output "Network security: Restrict NTLM: Outgoing NTLM traffic to remote server: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Setup\RecoveryConsole").SecurityLevel
+Write-Output "Recovery console: Allow automatic administrative logon: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Setup\RecoveryConsole").SetCommand
+Write-Output "Recovery console: Allow floppy copy and access to all drives and all folders: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").ShutdownWithoutLogon
+Write-Output "Shutdown: Allow system to be shut down without logging on: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Session Manager\Memory Management").ClearPageFileAtShutdown
+Write-Output "Shutdown: Clear virtual memory Pagefile: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Cryptography").ForceKeyProtection
+Write-Output "System cryptography: Force strong key protection for user keys stored on the computer: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Lsa").FIPSAlgorithmPolicy
+Write-Output "System cryptography: Use FIPS compliant algorithms for encryption, hashing, and signing (Disabled if setting cause compatibility issues with other approved applications.): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Session Manager\Kernel").ObCaseInsensitive
+Write-Output "System objects: Require case insensitivity for non-Windows subsystems: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Session Manager").ProtectionMode
+Write-Output "System objects: Strengthen default permissions of internal system objects (e.g., Symbolic Links): $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Control\Session Manager\Subsystems").Optional
+Write-Output "System settings: Optional subsystems: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\Safer\CodeIdentifiers").AuthenticationEnabled
+Write-Output "System settings: Use Certificate Rules on Windows Executables for Software Restriction Policies: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").FilterAdministratorToken
+Write-Output "User Account Control: Admin Approval Mode for the Built-in Administrator account: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").EnableUIADesktopToggle
+Write-Output "User Account Control: Allow UIAccess applications to prompt for elevation without using the secure desktop: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").ConsentPromptBehaviorAdmin
+Write-Output "User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").ConsentPromptBehaviorUser
+Write-Output "User Account Control: Behavior of the elevation prompt for standard users: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").EnableInstallerDetection
+Write-Output "User Account Control: Detect application installations and prompt for elevation: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").ValidateAdminCodeSignatures
+Write-Output "User Account Control: Only elevate executables that are signed and validated: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").EnableSecureUIAPaths
+Write-Output "User Account Control: Only elevate UIAccess applications that are installed in secure locations: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").EnableLUA
+Write-Output "User Account Control: Run all administrators in Admin Approval Mode: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").PromptOnSecureDesktop
+Write-Output "User Account Control: Switch to the secure desktop when prompting for elevation: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System").EnableVirtualization
+Write-Output "User Account Control: Virtualize file and registry write failures to per-user locations: $cmd" | Out-File -Append "$file"
+
+Write-Output `n "10) is configured by the OU." | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\LLTD").ProhibitLLTDIOOnPrivateNet
+Write-Output "Turn On Mapper I/O (LLTDIO) driver: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\LLTD").ProhibitRspndrOnPrivateNet
+Write-Output "Turn on Responder (RSPNDR) driver: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Peernet").Disabled
+Write-Output "Turn off Microsoft Peer-to-Peer Networking Services: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\WCN\Registrars").EnableRegistrars
+Write-Output "Configuration of wireless settings using Windows Connect Now: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\WCN\UI").DisableWcnUi
+Write-Output "Prohibit Access of the Windows Connect Now Wizards: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\DeviceInstall\Settings").AllowRemoteRPC
+Write-Output "Allow remote access to PnP interface: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\DeviceInstall\Settings").DisableSendGenericDriverNotFoundToWER
+Write-Output "Do not send a Windows Error report when a generic driver is installed on a device: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate").DisableWindowsUpdateAccess
+Write-Output "Turn off access to all Windows Update features: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows NT\Printers").DisableWebPnPDownload
+Write-Output "Turn off downloading of print drivers over HTTP: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\EventViewer").MicrosoftEventVwrDisableLinks
+Write-Output "Turn off Event Viewer 'Event.asp' links: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\PCHealth\HelpSvc").MicrosoftKBSearch
+Write-Output "Turn off Help and Support Center Microsoft Knowledge Base search: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\Internet Connection Wizard").ExitOnMSICW
+Write-Output "Turn off Internet Connection Wizard if URL connections referring to Microsoft.com: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer").NoWebServices
+Write-Output "Turn off Internet download for Web publishing and online ordering wizards: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer").NoInternetOpenWith
+Write-Output "Turn off Internet File Association service: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows NT\Printers").DisableHTTPPrinting
+Write-Output "Turn off printing over HTTP: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\Registration Wizard Control").NoRegistration
+Write-Output "Turn off Registration if URL connection is referring to Microsoft.com: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\SearchCompanion").DisableContentFileUpdates
+Write-Output "Turn off Search Companion content file updates: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer").NoOnlinePrintsWizard
+Write-Output "Turn off the 'Order Prints' picture task: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer").NoPublishingWizard
+Write-Output "Turn off the 'Publish to Web' task for files and folders: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Messenger\Client").CEIP
+Write-Output "Turn off the Windows Messenger Customer Experience Improvement Program: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\SQMClient\Windows").CEIPEnable
+Write-Output "Turn off Windows Customer Experience Improvement Program: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\PCHealth\ErrorReporting").DoReport
+Write-Output "Turn off Windows Error Reporting: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\System\CurrentControlSet\Services\NlaSvc\Parameters\Internet").EnableActiveProbing
+Write-Output "Turn off Windows Network Connectivity Status Indicator active tests: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\DriverSearching").DontSearchWindowsUpdate
+Write-Output "Turn off Windows Update device driver searching: $cmd" | Out-File -Append "$file"
+Write-Output "Selectively Allow the evaluation of symbolic links:" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\Filesystems\NTFS").SymlinkLocalToLocalEvaluation
+Write-Output "Local Link to Local Target: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\Filesystems\NTFS").SymlinkLocalToRemoteEvaluation
+Write-Output "Local Link to Remote Target: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\Filesystems\NTFS").SymlinkRemoteToRemoteEvaluation
+Write-Output "Remote Link to Remote Target: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\Filesystems\NTFS").SymlinkRemoteToRemoteEvaluation
+Write-Output "Remote Link to Local Target: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services").fAllowUnsolicitedFullControl
+Write-Output "Offer Remote Assistance: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows NT\Terminal Services").fAllowToGetHelp
+Write-Output "Solicited Remote Assistance: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows NT\RPC").EnableAuthEpResolution
+Write-Output "RPC Endpoint Mapper Client Authentication: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer").NoDriveTypeAutorun
+Write-Output "Turn off Autoplay: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\Digital Locker").DoNotRunDigitalLocker
+Write-Output "Do not allow Digital Locker to run: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\EventLog\Setup").AutoBackupLogFiles
+Write-Output "Backup log files automatically when full: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\EventLog\Setup").MaxSize
+Write-Output "Maximum Log Size: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application").Retention
+Write-Output "Retain old events: $cmd" | Out-File -Append "$file"
+$cmd = (gp "HKLM:\Software\Policies\Microsoft\Windows\EventLog\Application").Retention
+Write-Output "Retain old events: $cmd" | Out-File -Append "$file"

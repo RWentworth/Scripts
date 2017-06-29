@@ -3,8 +3,8 @@ $date = ((Get-Date).AddDays(-1)).Date
 $loc = "\\causers\DOShare\CA ISSO Security Team\newusers\ADusers`_$stamp.csv"
 
 $smtp = "OUTLOOKEE.CA.STATE.SBU"
-$to = "<TurnerGT@state.gov>", "<BrownAJ@state.gov>"
-$cc = "<bryanttn@state.gov>"
+$to = "Email"
+$cc = "Email"
 $user = $env:username + "@state.gov"
 $from = $user -replace 'caadm',''
 $subject = "New AD users report"

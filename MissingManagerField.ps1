@@ -1,7 +1,7 @@
 ﻿$smtp = "OUTLOOKEE.CA.STATE.SBU"
-$to = "CAISSO-Security-Team@state.gov"
-$cc = #"wentworthrh@state.gov"
-$from = "wentworthrh@state.gov"
+$to = "Email"
+$cc = "Email"
+$from = "Email"
 $subject = "List of Users That Dont Have the Manager Field Filled Out"
 $attachment = "C:\temp\MissingManagerField.txt"
 

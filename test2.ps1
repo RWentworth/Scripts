@@ -1,5 +1,3 @@
-﻿# *** DEVELOPED BY TREVOR BRYANT, PHACIL INC ***
-# *** ps-localgroups.ps1 version 1.0.0, 10/2/2014 ***
 # ***  USER MUST EXECUTE AS ADMININISTRATOR  ***
 
 $server = Get-Content "C:\temp\hostlist"

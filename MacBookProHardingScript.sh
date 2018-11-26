@@ -9,26 +9,39 @@ echo "#########################################################################"
 echo "##################### PATCHES & UPDATES #################################"
 echo "#########################################################################"
 
-echo "################[Download software updates]"
+echo "################[Download software updates]################"
 softwareupdate --download --all
 
-echo "Enable Check for Auto Updates"
+echo "################[Enable Check for Auto Updates]################"
 sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticCheckEnabled -int 1
 
-echo "Enable AutoUpdate"
+echo "################[Enable AutoUpdate]################"
 sudo defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool TRUE
 
-echo "Auto update patches"
+echo "################[Auto update patches]################"
 sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate ConfigDataInstall -bool true && sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate CriticalUpdateInstall -bool true
 
-echo "Run updates on all installed apps"
-softwareupdate -i -a; sudo reboot
-
-echo "Last Full Successful Date"
+echo "################[Last Full Successful Date]################"
 defaults read /Library/Preferences/com.apple.SoftwareUpdate | egrep LastFullSuccessfulDate
 
-echo"Enable Install Updates"
+echo"################[Enable Install Updates]################"
 sudo defaults write /Library/Preferences/com.apple.commerce AutoUpdateRestartRequired -bool TRUE
+
+echo "#####################[Download software updates]#####################"
+softwareupdate --download --all
+
+echo "#####################[Enable Check for Auto Updates]#####################"
+sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticCheckEnabled -int 1
+
+echo "#####################[Enable AutoUpdate]#####################"
+sudo defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool TRUE
+
+echo "#####################[Auto update patches]#####################"
+sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate ConfigDataInstall -bool true && sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate CriticalUpdateInstall -bool true
+
+echo "#####################[Last Full Successful Date]#####################"
+defaults read /Library/Preferences/com.apple.SoftwareUpdate | egrep LastFullSuccessfulDate
+
 
 echo "#########################################################################"
 echo "##################### SOFTWARE  INSTALLS #################################"
@@ -102,28 +115,22 @@ echo "################[Install VLC Player]################"
 brew cask install VLC
 
 echo "################[Hacking Tools]################"
-#$echo "Install EvilOSX" 
-#git clone https://github.com/Marten4n6/EvilOSX.git 
-#cd EvilOSX
-#./Server
+$echo "Install EvilOSX" 
+git clone https://github.com/Marten4n6/EvilOSX.git 
+cd EvilOSX
+./Server
 
-#echo "Install HashCat" 
-#git clone https://github.com/hashcat/hashcat.git
-#mkdir -p hashcat/deps
-#git clone https://github.com/Khronos/OpenCL -Headers.git hashcat/deps/OpenCL
-#cd hashcat/
-#make
-#./hashcat -m2500 -b 
-#./hashcat -m2500 file.hccap dictionary 
+echo "Install HashCat" 
+git clone https://github.com/hashcat/hashcat.git
+mkdir -p hashcat/deps
+git clone https://github.com/Khronos/OpenCL -Headers.git hashcat/deps/OpenCL
+cd hashcat/
+make
+./hashcat -m2500 -b 
+./hashcat -m2500 file.hccap dictionary 
 
 echo "################[Install Splunk via command line]################" 
 wget -O splunk-7.1.1-8f0ead9ec3db-macosx-10.11-intel.dmg 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86&platform=macos&version=7.1.1&product=splunk&filename=splunk-7.1.1-8f0ead9ec3db-macosx-10.11-intel.dmg&wget=true'
-
-#echo "Turn on Wifi"
-#echo networksetup -setairportpower en0 on
-
-#echo "Connect to Wifi"
-#echo networksetup -setairportnetwork en0 "Wifi Name " Password 
 
 echo "################[Uninstall Java]################"
 sudo rm -fr /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin
@@ -132,6 +139,16 @@ sudo rm -fr /Library/PreferencePanes/JavaControlPanel.prefpane
 echo "################[Uninstall Flash]################"
 <home directory>/Library/Preferences/Macromedia/Flash\ Player
 <home directory>/Library/Caches/Adobe/Flash\ Player
+
+echo "#########################################################################"
+echo "############################## WIFI #####################################"
+echo "#########################################################################"
+
+#echo "Turn on Wifi"
+#echo networksetup -setairportpower en0 on
+
+#echo "Connect to Wifi"
+#echo networksetup -setairportnetwork en0 "Wifi Name " Password 
 
 echo "#########################################################################"
 echo "##################### Bluetooth Settings ################################"
@@ -149,14 +166,14 @@ echo "Verify values are Disable"
 system_profiler SPBluetoothDataType | grep State
 defaults write /Library/Preferences/com.apple.Bluetooth.plist ControllerPowerState 0
 
-echo "Remove Bluetooth support software" 
+echo "################[Remove Bluetooth support software]################" 
 rm -rf /System/Library/Extensions/IOBluetoothFamily.kext
 rm -rf /System/Library/Extensions/IOBluetoothHIDDriver.kext
 
-echo "Turn off Bluetooh"
+echo "################[Turn off Bluetooh]################"
 defaults write /Library/Preferences/com.apple.BluetoothControllerPowerState -int 0
 
-echo "Turn off Bluetooth services"
+echo "################[Turn off Bluetooth services]################"
 launchctl unload -w /System/Library/LaunchDaemons/com.apple.blued.plist
 
 echo "#########################################################################"
@@ -187,8 +204,6 @@ echo "################[Disable Screen Sharing]#############################"
 echo "Verify the value returned is Service is disabled"
 # Enable Only Screen Sharing
 #sudo defaults write /var/db/launchd.db/com.apple.launchd/overrides.plist com.apple.screensharing -dict Disabled -bool false
-#sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist
-# Disable Screen Sharing
 sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.screensharing.plist
 
 echo "################[Disable Printer Sharing]#############################"
@@ -228,7 +243,6 @@ echo "#########################################################################"
 echo "################[Enable FileVault]################"
 echo "Ensure FileVault is turned on"
 fdesetup status
-
 echo "Enable"
 sudo fdesetup enable
 #echo "Disable"
@@ -300,12 +314,12 @@ curl -L -O http://iasecontent.disa.mil/stigs/zip/U_Apple_OS_X_10-12_V1R1_STIG.zi
 unzip U_Apple_OS_X_10-12_V1R1_STIG.zip 
 cd /Users/rw/Downloads/U_Apple_OS_X_10-12_V1R1_Mobile_Configuation_Files
 /usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Application_Restrictions_Policy.mobileconfig
-# /usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Bluetooth_Policy.mobileconfig
-# /usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Custom_Policy.mobileconfig
-# /usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Disable_iCloud_Policy.mobileconfig
-# /usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Login_Window_Policy.mobileconfig
-# /usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Restrictions_Policy.mobileconfig
-# /usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Security_and_Privacy_Policy.mobileconfig
+/usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Bluetooth_Policy.mobileconfig
+/usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Custom_Policy.mobileconfig
+/usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Disable_iCloud_Policy.mobileconfig
+/usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Login_Window_Policy.mobileconfig
+/usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Restrictions_Policy.mobileconfig
+/usr/bin/profiles -I -F U_Apple_OS_X_10-11_V1R5_STIG_Security_and_Privacy_Policy.mobileconfig
 
 
 echo "################[Remove audio support software]################"
@@ -487,7 +501,7 @@ echo "################[Disable Remote Management]################"
 /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
 
 echo "#########################################################################"
-echo "##################### Application Hardening #################################"
+echo "##################### Application Hardening ##############################"
 echo "#########################################################################"
 
 echo "################[Harden Google Chrome]###############"
@@ -518,23 +532,8 @@ defaults write com.google.Chrome RemoteAccessHostFirewallTraversal -bool false
 
 
 echo "#########################################################################"
-echo "##################### PATCHES & UPDATES #################################"
+echo "#############################Reboot######################################"
 echo "#########################################################################"
 
-echo "Download software updates"
-softwareupdate --download --all
-
-echo "Enable Check for Auto Updates"
-sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticCheckEnabled -int 1
-
-echo "Enable AutoUpdate"
-sudo defaults write /Library/Preferences/com.apple.commerce AutoUpdate -bool TRUE
-
-echo "Auto update patches"
-sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate ConfigDataInstall -bool true && sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate CriticalUpdateInstall -bool true
-
-echo "Run updates on all installed apps"
-softwareupdate -i -a; sudo reboot
-
-echo "Last Full Successful Date"
-defaults read /Library/Preferences/com.apple.SoftwareUpdate | egrep LastFullSuccessfulDate
+echo "#####################[Reboot]#####################"
+sudo reboot

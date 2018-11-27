@@ -56,6 +56,9 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 echo "################[Install Brew]################" 
 brew install brew-cask
 
+echo "################[Install WGET]################"
+brew cask install wget
+
 echo "################[Install Chrome]################" 
 brew cask install google-chrome
 
@@ -70,7 +73,9 @@ echo "################[Install Subline Text]################"
 brew cask install sublime-text 
 
 echo "################[Install CleanMyMac]################"
-brew cask install cleanmymac3
+wget -O CleanMyMac3.dmg 'https://dl.devmate.com/com.macpaw.CleanMyMac3/CleanMyMac3.dmg?cid=125492431.1542699039'
+sudo cp -R /Volumes/CleanMyMac\ 3/ /Applications
+sudo hdiutil unmount /Volumes/CleanMyMac\ 3/
 
 echo "################[Install Gemini]################"
 brew cask install Gemini
